@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinook Album API</title>
+    <style>
+        :root {
+            --bg: #0b1f17;
+            --card: #133326;
+            --text: #e6f4ea;
+            --muted: #86b89a;
+            --accent: #4ade80;
+            --border: #1f4d38;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        main {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 640px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+        h1 { margin: 0 0 8px; }
+        .subtitle { color: var(--muted); margin: 0 0 24px; }
+        .button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+        }
+        .button:hover { opacity: 0.85; }
+        h2 { font-size: 1.1rem; margin: 32px 0 12px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        td { padding: 8px 0; border-bottom: 1px solid rgba(148, 163, 184, 0.25); }
+        code { color: var(--accent); }
+        .method { font-weight: 600; width: 80px; }
+        footer { margin-top: 32px; color: var(--muted); font-size: 0.85rem; }
+        a.link { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Chinook Album API</h1>
+        <p class="subtitle">CST-339 Lab 2 &middot; Spring Boot &middot; PostgreSQL</p>
+
+        <a class="button" href="/swagger-ui.html">Open API Docs</a>
+
+        <h2>Endpoints</h2>
+        <table>
+            <tr><td class="method">GET</td><td><code>/api/albums</code></td><td>Get all albums</td></tr>
+            <tr><td class="method">GET</td><td><code>/api/albums/{id}</code></td><td>Get one album</td></tr>
+            <tr><td class="method">POST</td><td><code>/api/albums</code></td><td>Create an album</td></tr>
+            <tr><td class="method">PUT</td><td><code>/api/albums/{id}</code></td><td>Update an album</td></tr>
+            <tr><td class="method">DELETE</td><td><code>/api/albums/{id}</code></td><td>Delete an album</td></tr>
+        </table>
+
+        <footer>
+            Raw OpenAPI spec: <a class="link" href="/v3/api-docs">/v3/api-docs</a><br>
+            Created by Brendon Gacusan
+        </footer>
+    </main>
+</body>
+</html>
