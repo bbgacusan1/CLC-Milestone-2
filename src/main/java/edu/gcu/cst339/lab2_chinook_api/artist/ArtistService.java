@@ -13,7 +13,7 @@ class ArtistService {
     ArtistService(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
     }
-
+    
     @Transactional(readOnly = true)
     List<ArtistDto> findAll() {
         return artistRepository.findAll().stream()
