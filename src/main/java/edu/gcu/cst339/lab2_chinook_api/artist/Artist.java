@@ -16,4 +16,11 @@ class Artist {
     @Column(name = "name")
     private String name;
 
+    // Getters
+    Integer getArtistId() { return artistId; }
+    String getArtistName() { return name; }
+    // Setters
+    void setArtistId(Integer artistId) { this.artistId = artistId; }
+    void setArtistName(String name) { this.name = name; }
+
 }
