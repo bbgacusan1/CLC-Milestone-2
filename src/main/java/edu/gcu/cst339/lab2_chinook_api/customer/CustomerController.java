@@ -1,5 +1,6 @@
 package edu.gcu.cst339.lab2_chinook_api.customer;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -27,21 +28,22 @@ class CustomerController {
 
     @GetMapping
     List<CustomerDto> findAll() {
-        return customerService.findAll(); 
+        return customerService.findAll();
     }
 
     @GetMapping("/{id}")
     CustomerDto findById(@PathVariable Integer id) {
-        return customerService.findById(id); 
+        return customerService.findById(id);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    CustomerDto create(@Valid @RequestBody CustomerDto dto) {
-        return customerService.create(dto);
+    ResponseEntity<CustomerDto> create(@Valid @RequestBody CustomerDto dto) {
+        CustomerDto created = customerService.create(dto);
+        URI location = URI.create("/api/customers/" + created.customerId());
+        return ResponseEntity.created(location).body(created);
     }
 
-     @PutMapping("/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<CustomerDto> update(@PathVariable Integer id, @RequestBody CustomerDto dto) {
         CustomerDto updated = customerService.update(id, dto);
         return ResponseEntity.ok(updated);
