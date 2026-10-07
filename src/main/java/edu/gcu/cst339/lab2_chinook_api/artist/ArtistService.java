@@ -39,7 +39,7 @@ class ArtistService {
         Artist artist = artistRepository.findById(id)
             .orElseThrow(() -> new ArtistNotFoundException(id));
         artist.setName(dto.name());
-        return ArtistDto.fromEntity(artistRepository.save(artist));
+        return ArtistDto.fromEntity(artist);
     }
 
     @Transactional

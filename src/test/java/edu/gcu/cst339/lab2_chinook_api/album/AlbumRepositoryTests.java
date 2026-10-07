@@ -12,7 +12,8 @@ class AlbumRepositoryTests {
 
     @Test
     void countReturnsAllChinookAlbums() {
-        assertThat(albumRepository.count()).isGreaterThanOrEqualTo(347);    }
+        assertThat(albumRepository.count()).isGreaterThanOrEqualTo(347);    
+    }
 
     @Test
     void findByIdReturnsAlbum() {
