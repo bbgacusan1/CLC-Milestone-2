@@ -1,0 +1,367 @@
+{
+  "info": {
+    "name": "CLC Milestone 2 - MediaType, Invoice, InvoiceLine",
+    "description": "CRUD verification for /api/media-types, /api/invoices and /api/invoice-lines. Run each folder top to bottom (or use the Collection Runner): the Create request saves the new ID into a collection variable that the Get/Update/Delete requests use, and the Delete request cleans the test row up again. Requests named (400)/(404)/(409) are expected error cases. The 409 requests are rejected by PostgreSQL, so they change no data.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "mediaTypeId", "value": "" },
+    { "key": "invoiceId", "value": "" },
+    { "key": "invoiceLineId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Media Types",
+      "item": [
+        {
+          "name": "Get All Media Types (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "pm.test('Returns the 5 Chinook media types', () => pm.expect(pm.response.json().length).to.be.at.least(5));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/media-types" },
+          "response": []
+        },
+        {
+          "name": "Get Media Type By Id (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "pm.test('Media type 1 is MPEG audio file', () => pm.expect(pm.response.json().name).to.eql('MPEG audio file'));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/media-types/1" },
+          "response": []
+        },
+        {
+          "name": "Create Media Type (201)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+            "pm.test('Location header is set', () => pm.response.to.have.header('Location'));",
+            "const body = pm.response.json();",
+            "pm.test('Name was saved', () => pm.expect(body.name).to.eql('Postman Test Format'));",
+            "pm.collectionVariables.set('mediaTypeId', body.mediaTypeId);"
+          ]}}],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Postman Test Format\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/media-types"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Created Media Type (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "pm.test('Persisted in PostgreSQL', () => pm.expect(pm.response.json().name).to.eql('Postman Test Format'));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/media-types/{{mediaTypeId}}" },
+          "response": []
+        },
+        {
+          "name": "Update Media Type (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('ID unchanged', () => pm.expect(String(body.mediaTypeId)).to.eql(String(pm.collectionVariables.get('mediaTypeId'))));",
+            "pm.test('Name updated', () => pm.expect(body.name).to.eql('Postman Test Format (Renamed)'));"
+          ]}}],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Postman Test Format (Renamed)\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/media-types/{{mediaTypeId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Media Type (204)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 204', () => pm.response.to.have.status(204));"
+          ]}}],
+          "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/media-types/{{mediaTypeId}}" },
+          "response": []
+        },
+        {
+          "name": "Get Deleted Media Type (404)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 404', () => pm.response.to.have.status(404));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/media-types/{{mediaTypeId}}" },
+          "response": []
+        },
+        {
+          "name": "Create Media Type - Blank Name (400)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 400', () => pm.response.to.have.status(400));"
+          ]}}],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/media-types"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Media Type In Use By Tracks (409)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 409', () => pm.response.to.have.status(409));",
+            "pm.test('Friendly message, no SQL', () => pm.expect(pm.response.text()).to.eql('Conflict: Media type is in use by one or more tracks and cannot be deleted.'));"
+          ]}}],
+          "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/media-types/1" },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "Get All Invoices (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "pm.test('Returns the 412 Chinook invoices', () => pm.expect(pm.response.json().length).to.be.at.least(412));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/invoices" },
+          "response": []
+        },
+        {
+          "name": "Get Invoice By Id (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('Invoice 1 belongs to customer 2', () => pm.expect(body.customerId).to.eql(2));",
+            "pm.test('Invoice 1 total is 1.98', () => pm.expect(body.total).to.eql(1.98));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/invoices/1" },
+          "response": []
+        },
+        {
+          "name": "Create Invoice (201)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+            "pm.test('Location header is set', () => pm.response.to.have.header('Location'));",
+            "const body = pm.response.json();",
+            "pm.test('Fields were saved', () => {",
+            "  pm.expect(body.customerId).to.eql(1);",
+            "  pm.expect(body.invoiceDate).to.eql('2026-10-09T12:30:00');",
+            "  pm.expect(body.total).to.eql(9.99);",
+            "});",
+            "pm.collectionVariables.set('invoiceId', body.invoiceId);"
+          ]}}],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"customerId\": 1,\n  \"invoiceDate\": \"2026-10-09T12:30:00\",\n  \"billingAddress\": \"123 Test St\",\n  \"billingCity\": \"Phoenix\",\n  \"billingState\": \"AZ\",\n  \"billingCountry\": \"USA\",\n  \"billingPostalCode\": \"85001\",\n  \"total\": 9.99\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/invoices"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Created Invoice (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "pm.test('Persisted in PostgreSQL', () => pm.expect(pm.response.json().billingCity).to.eql('Phoenix'));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/invoices/{{invoiceId}}" },
+          "response": []
+        },
+        {
+          "name": "Update Invoice (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('ID unchanged', () => pm.expect(String(body.invoiceId)).to.eql(String(pm.collectionVariables.get('invoiceId'))));",
+            "pm.test('Fields updated', () => {",
+            "  pm.expect(body.customerId).to.eql(3);",
+            "  pm.expect(body.billingCity).to.eql('Tempe');",
+            "  pm.expect(body.total).to.eql(12.5);",
+            "});"
+          ]}}],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"customerId\": 3,\n  \"invoiceDate\": \"2026-10-10T08:00:00\",\n  \"billingAddress\": \"456 Updated Ave\",\n  \"billingCity\": \"Tempe\",\n  \"billingState\": \"AZ\",\n  \"billingCountry\": \"USA\",\n  \"billingPostalCode\": \"85281\",\n  \"total\": 12.50\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/invoices/{{invoiceId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Invoice (204)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 204', () => pm.response.to.have.status(204));"
+          ]}}],
+          "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/invoices/{{invoiceId}}" },
+          "response": []
+        },
+        {
+          "name": "Get Deleted Invoice (404)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 404', () => pm.response.to.have.status(404));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/invoices/{{invoiceId}}" },
+          "response": []
+        },
+        {
+          "name": "Create Invoice - Negative Total (400)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 400', () => pm.response.to.have.status(400));"
+          ]}}],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"customerId\": 1,\n  \"invoiceDate\": \"2026-10-09T12:30:00\",\n  \"total\": -5.00\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/invoices"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Invoice - Customer Does Not Exist (409)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 409', () => pm.response.to.have.status(409));",
+            "pm.test('Friendly message, no SQL', () => pm.expect(pm.response.text()).to.include('customerId may not exist'));"
+          ]}}],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"customerId\": 9999,\n  \"invoiceDate\": \"2026-10-09T12:30:00\",\n  \"total\": 9.99\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/invoices"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Invoice With Invoice Lines (409)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 409', () => pm.response.to.have.status(409));",
+            "pm.test('Friendly message, no SQL', () => pm.expect(pm.response.text()).to.include('still has invoice lines'));"
+          ]}}],
+          "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/invoices/1" },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Invoice Lines",
+      "item": [
+        {
+          "name": "Get All Invoice Lines (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "pm.test('Returns the 2240 Chinook invoice lines', () => pm.expect(pm.response.json().length).to.be.at.least(2240));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/invoice-lines" },
+          "response": []
+        },
+        {
+          "name": "Get Invoice Line By Id (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('Invoice line 1 is track 2 on invoice 1', () => {",
+            "  pm.expect(body.invoiceId).to.eql(1);",
+            "  pm.expect(body.trackId).to.eql(2);",
+            "  pm.expect(body.unitPrice).to.eql(0.99);",
+            "});"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/invoice-lines/1" },
+          "response": []
+        },
+        {
+          "name": "Create Invoice Line (201)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+            "pm.test('Location header is set', () => pm.response.to.have.header('Location'));",
+            "const body = pm.response.json();",
+            "pm.test('Fields were saved', () => {",
+            "  pm.expect(body.invoiceId).to.eql(1);",
+            "  pm.expect(body.trackId).to.eql(3);",
+            "  pm.expect(body.quantity).to.eql(1);",
+            "});",
+            "pm.collectionVariables.set('invoiceLineId', body.invoiceLineId);"
+          ]}}],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"invoiceId\": 1,\n  \"trackId\": 3,\n  \"unitPrice\": 0.99,\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/invoice-lines"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Created Invoice Line (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "pm.test('Persisted in PostgreSQL', () => pm.expect(pm.response.json().trackId).to.eql(3));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/invoice-lines/{{invoiceLineId}}" },
+          "response": []
+        },
+        {
+          "name": "Update Invoice Line (200)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('ID unchanged', () => pm.expect(String(body.invoiceLineId)).to.eql(String(pm.collectionVariables.get('invoiceLineId'))));",
+            "pm.test('Fields updated', () => {",
+            "  pm.expect(body.invoiceId).to.eql(2);",
+            "  pm.expect(body.trackId).to.eql(10);",
+            "  pm.expect(body.unitPrice).to.eql(1.99);",
+            "  pm.expect(body.quantity).to.eql(3);",
+            "});"
+          ]}}],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"invoiceId\": 2,\n  \"trackId\": 10,\n  \"unitPrice\": 1.99,\n  \"quantity\": 3\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/invoice-lines/{{invoiceLineId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Invoice Line (204)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 204', () => pm.response.to.have.status(204));"
+          ]}}],
+          "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/invoice-lines/{{invoiceLineId}}" },
+          "response": []
+        },
+        {
+          "name": "Get Deleted Invoice Line (404)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 404', () => pm.response.to.have.status(404));"
+          ]}}],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/invoice-lines/{{invoiceLineId}}" },
+          "response": []
+        },
+        {
+          "name": "Create Invoice Line - Zero Quantity (400)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 400', () => pm.response.to.have.status(400));"
+          ]}}],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"invoiceId\": 1,\n  \"trackId\": 3,\n  \"unitPrice\": 0.99,\n  \"quantity\": 0\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/invoice-lines"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Invoice Line - Track Does Not Exist (409)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "pm.test('Status is 409', () => pm.response.to.have.status(409));",
+            "pm.test('Friendly message, no SQL', () => pm.expect(pm.response.text()).to.eql('Request conflicts with existing data: the invoiceId or trackId may not exist.'));"
+          ]}}],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"invoiceId\": 1,\n  \"trackId\": 99999,\n  \"unitPrice\": 0.99,\n  \"quantity\": 1\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/invoice-lines"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
