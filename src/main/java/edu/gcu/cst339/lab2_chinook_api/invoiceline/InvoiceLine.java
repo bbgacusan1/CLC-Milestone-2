@@ -62,47 +62,63 @@ class InvoiceLine {
         this.quantity = quantity;
     }
 
-    /** @return the database-generated invoice line ID, or {@code null} if not yet saved */
+    /** {@return the database-generated invoice line ID, or {@code null} if not yet saved} */
     Integer getInvoiceLineId() {
         return invoiceLineId;
     }
 
-    /** @return the ID of the invoice this line belongs to */
+    /** {@return the ID of the invoice this line belongs to} */
     Integer getInvoiceId() {
         return invoiceId;
     }
 
-    /** @param invoiceId the ID of an existing invoice */
+    /**
+     * Sets the invoice ID.
+     *
+     * @param invoiceId the ID of an existing invoice
+     */
     void setInvoiceId(Integer invoiceId) {
         this.invoiceId = invoiceId;
     }
 
-    /** @return the ID of the purchased track */
+    /** {@return the ID of the purchased track} */
     Integer getTrackId() {
         return trackId;
     }
 
-    /** @param trackId the ID of an existing track */
+    /**
+     * Sets the track ID.
+     *
+     * @param trackId the ID of an existing track
+     */
     void setTrackId(Integer trackId) {
         this.trackId = trackId;
     }
 
-    /** @return the price of one unit of the track */
+    /** {@return the price of one unit of the track} */
     BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    /** @param unitPrice the unit price (required, zero or more, up to two decimal places) */
+    /**
+     * Sets the unit price.
+     *
+     * @param unitPrice the unit price (required, zero or more, up to two decimal places)
+     */
     void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    /** @return the number of units purchased */
+    /** {@return the number of units purchased} */
     Integer getQuantity() {
         return quantity;
     }
 
-    /** @param quantity the number of units purchased (required, greater than zero) */
+    /**
+     * Sets the number of units purchased.
+     *
+     * @param quantity the number of units purchased (required, greater than zero)
+     */
     void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }

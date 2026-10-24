@@ -87,76 +87,132 @@ class Employee {
     public Employee() {
     }
 
-    /** @return the database-generated employee ID, or {@code null} if not yet saved */
+    /** {@return the database-generated employee ID, or {@code null} if not yet saved} */
     public Integer getEmployeeId() { return employeeId; }
 
-    /** @return the employee's last name */
+    /** {@return the employee's last name} */
     public String getLastName() { return lastName; }
-    /** @param lastName the employee's last name (required, at most 20 characters) */
+    /**
+     * Sets the employee's last name.
+     *
+     * @param lastName the employee's last name (required, at most 20 characters)
+     */
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-    /** @return the employee's first name */
+    /** {@return the employee's first name} */
     public String getFirstName() { return firstName; }
-    /** @param firstName the employee's first name (required, at most 20 characters) */
+    /**
+     * Sets the employee's first name.
+     *
+     * @param firstName the employee's first name (required, at most 20 characters)
+     */
     public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    /** @return the employee's job title, such as "Sales Support Agent" */
+    /** {@return the employee's job title, such as "Sales Support Agent"} */
     public String getTitle() { return title; }
-    /** @param title the job title (optional, at most 30 characters) */
+    /**
+     * Sets the job title.
+     *
+     * @param title the job title (optional, at most 30 characters)
+     */
     public void setTitle(String title) { this.title = title; }
 
-    /** @return the ID of this employee's manager, or {@code null} if the employee reports to no one */
+    /** {@return the ID of this employee's manager, or {@code null} if the employee reports to no one} */
     public Integer getReportsTo() { return reportsTo; }
-    /** @param reportsTo the ID of an existing employee who manages this employee, or {@code null} */
+    /**
+     * Sets the manager this employee reports to.
+     *
+     * @param reportsTo the ID of an existing employee who manages this employee, or {@code null}
+     */
     public void setReportsTo(Integer reportsTo) { this.reportsTo = reportsTo; }
 
-    /** @return the employee's date of birth */
+    /** {@return the employee's date of birth} */
     public LocalDateTime getBirthDate() { return birthDate; }
-    /** @param birthDate the date of birth (optional) */
+    /**
+     * Sets the date of birth.
+     *
+     * @param birthDate the date of birth (optional)
+     */
     public void setBirthDate(LocalDateTime birthDate) { this.birthDate = birthDate; }
 
-    /** @return the date the employee was hired */
+    /** {@return the date the employee was hired} */
     public LocalDateTime getHireDate() { return hireDate; }
-    /** @param hireDate the hire date (optional) */
+    /**
+     * Sets the hire date.
+     *
+     * @param hireDate the hire date (optional)
+     */
     public void setHireDate(LocalDateTime hireDate) { this.hireDate = hireDate; }
 
-    /** @return the employee's street address */
+    /** {@return the employee's street address} */
     public String getAddress() { return address; }
-    /** @param address the street address (optional, at most 70 characters) */
+    /**
+     * Sets the street address.
+     *
+     * @param address the street address (optional, at most 70 characters)
+     */
     public void setAddress(String address) { this.address = address; }
 
-    /** @return the employee's city */
+    /** {@return the employee's city} */
     public String getCity() { return city; }
-    /** @param city the city (optional, at most 40 characters) */
+    /**
+     * Sets the city.
+     *
+     * @param city the city (optional, at most 40 characters)
+     */
     public void setCity(String city) { this.city = city; }
 
-    /** @return the employee's state or province */
+    /** {@return the employee's state or province} */
     public String getState() { return state; }
-    /** @param state the state or province (optional, at most 40 characters) */
+    /**
+     * Sets the state or province.
+     *
+     * @param state the state or province (optional, at most 40 characters)
+     */
     public void setState(String state) { this.state = state; }
 
-    /** @return the employee's country */
+    /** {@return the employee's country} */
     public String getCountry() { return country; }
-    /** @param country the country (optional, at most 40 characters) */
+    /**
+     * Sets the country.
+     *
+     * @param country the country (optional, at most 40 characters)
+     */
     public void setCountry(String country) { this.country = country; }
 
-    /** @return the employee's postal code */
+    /** {@return the employee's postal code} */
     public String getPostalCode() { return postalCode; }
-    /** @param postalCode the postal code (optional, at most 10 characters) */
+    /**
+     * Sets the postal code.
+     *
+     * @param postalCode the postal code (optional, at most 10 characters)
+     */
     public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
 
-    /** @return the employee's phone number */
+    /** {@return the employee's phone number} */
     public String getPhone() { return phone; }
-    /** @param phone the phone number (optional, at most 24 characters) */
+    /**
+     * Sets the phone number.
+     *
+     * @param phone the phone number (optional, at most 24 characters)
+     */
     public void setPhone(String phone) { this.phone = phone; }
 
-    /** @return the employee's fax number */
+    /** {@return the employee's fax number} */
     public String getFax() { return fax; }
-    /** @param fax the fax number (optional, at most 24 characters) */
+    /**
+     * Sets the fax number.
+     *
+     * @param fax the fax number (optional, at most 24 characters)
+     */
     public void setFax(String fax) { this.fax = fax; }
 
-    /** @return the employee's email address */
+    /** {@return the employee's email address} */
     public String getEmail() { return email; }
-    /** @param email the email address (optional, at most 60 characters) */
+    /**
+     * Sets the email address.
+     *
+     * @param email the email address (optional, at most 60 characters)
+     */
     public void setEmail(String email) { this.email = email; }
 }

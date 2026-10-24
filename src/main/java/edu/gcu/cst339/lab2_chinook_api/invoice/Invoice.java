@@ -88,87 +88,119 @@ class Invoice {
         this.total = total;
     }
 
-    /** @return the database-generated invoice ID, or {@code null} if not yet saved */
+    /** {@return the database-generated invoice ID, or {@code null} if not yet saved} */
     Integer getInvoiceId() {
         return invoiceId;
     }
 
-    /** @return the ID of the customer who made the purchase */
+    /** {@return the ID of the customer who made the purchase} */
     Integer getCustomerId() {
         return customerId;
     }
 
-    /** @param customerId the ID of an existing customer */
+    /**
+     * Sets the customer ID.
+     *
+     * @param customerId the ID of an existing customer
+     */
     void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
-    /** @return the date and time of the purchase */
+    /** {@return the date and time of the purchase} */
     LocalDateTime getInvoiceDate() {
         return invoiceDate;
     }
 
-    /** @param invoiceDate the date and time of the purchase (required) */
+    /**
+     * Sets the date and time of the purchase.
+     *
+     * @param invoiceDate the date and time of the purchase (required)
+     */
     void setInvoiceDate(LocalDateTime invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
 
-    /** @return the billing street address */
+    /** {@return the billing street address} */
     String getBillingAddress() {
         return billingAddress;
     }
 
-    /** @param billingAddress the billing street address (at most 70 characters) */
+    /**
+     * Sets the billing street address.
+     *
+     * @param billingAddress the billing street address (at most 70 characters)
+     */
     void setBillingAddress(String billingAddress) {
         this.billingAddress = billingAddress;
     }
 
-    /** @return the billing city */
+    /** {@return the billing city} */
     String getBillingCity() {
         return billingCity;
     }
 
-    /** @param billingCity the billing city (at most 40 characters) */
+    /**
+     * Sets the billing city.
+     *
+     * @param billingCity the billing city (at most 40 characters)
+     */
     void setBillingCity(String billingCity) {
         this.billingCity = billingCity;
     }
 
-    /** @return the billing state or province */
+    /** {@return the billing state or province} */
     String getBillingState() {
         return billingState;
     }
 
-    /** @param billingState the billing state or province (at most 40 characters) */
+    /**
+     * Sets the billing state or province.
+     *
+     * @param billingState the billing state or province (at most 40 characters)
+     */
     void setBillingState(String billingState) {
         this.billingState = billingState;
     }
 
-    /** @return the billing country */
+    /** {@return the billing country} */
     String getBillingCountry() {
         return billingCountry;
     }
 
-    /** @param billingCountry the billing country (at most 40 characters) */
+    /**
+     * Sets the billing country.
+     *
+     * @param billingCountry the billing country (at most 40 characters)
+     */
     void setBillingCountry(String billingCountry) {
         this.billingCountry = billingCountry;
     }
 
-    /** @return the billing postal code */
+    /** {@return the billing postal code} */
     String getBillingPostalCode() {
         return billingPostalCode;
     }
 
-    /** @param billingPostalCode the billing postal code (at most 10 characters) */
+    /**
+     * Sets the billing postal code.
+     *
+     * @param billingPostalCode the billing postal code (at most 10 characters)
+     */
     void setBillingPostalCode(String billingPostalCode) {
         this.billingPostalCode = billingPostalCode;
     }
 
-    /** @return the invoice total */
+    /** {@return the invoice total} */
     BigDecimal getTotal() {
         return total;
     }
 
-    /** @param total the invoice total (required, zero or more, up to two decimal places) */
+    /**
+     * Sets the invoice total.
+     *
+     * @param total the invoice total (required, zero or more, up to two decimal places)
+     */
     void setTotal(BigDecimal total) {
         this.total = total;
     }

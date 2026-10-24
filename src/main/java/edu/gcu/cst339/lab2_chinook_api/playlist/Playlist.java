@@ -29,22 +29,36 @@ class Playlist {
     @Column(name = "name")
     private String name;
 
-    /** @return the database-generated playlist ID, or {@code null} if not yet saved */
+    /**
+     * No-argument constructor required by JPA.
+     */
+    Playlist() {
+    }
+
+    /** {@return the database-generated playlist ID, or {@code null} if not yet saved} */
     public Integer getPlaylistId() {
         return playlistId;
     }
 
-    /** @param playlistId the playlist ID; normally set by the database rather than by application code */
+    /**
+     * Sets the playlist ID.
+     *
+     * @param playlistId the playlist ID; normally set by the database rather than by application code
+     */
     public void setPlaylistId(Integer playlistId) {
         this.playlistId = playlistId;
     }
 
-    /** @return the playlist name */
+    /** {@return the playlist name} */
     public String getName() {
         return name;
     }
 
-    /** @param name the new playlist name (at most 120 characters) */
+    /**
+     * Sets the playlist name.
+     *
+     * @param name the new playlist name (at most 120 characters)
+     */
     public void setName(String name) {
         this.name = name;
     }

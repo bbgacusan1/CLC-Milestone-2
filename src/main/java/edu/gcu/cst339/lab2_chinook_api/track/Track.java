@@ -61,93 +61,135 @@ class Track {
     @Column(name = "unit_price")
     private BigDecimal unitPrice; 
 
+    /**
+     * No-argument constructor required by JPA.
+     */
+    Track() {
+    }
+
     //getters and setters
-    /** @return the database-generated track ID, or {@code null} if not yet saved */
+    /** {@return the database-generated track ID, or {@code null} if not yet saved} */
     public Integer getTrackId() {
         return trackId;
     }
 
-    /** @param trackId the track ID; normally set by the database rather than by application code */
+    /**
+     * Sets the track ID.
+     *
+     * @param trackId the track ID; normally set by the database rather than by application code
+     */
     public void setTrackId(Integer trackId) {
         this.trackId = trackId;
     }
 
-    /** @return the track name */
+    /** {@return the track name} */
     public String getName() {
         return name;
     }
 
-    /** @param name the track name (required, at most 200 characters) */
+    /**
+     * Sets the track name.
+     *
+     * @param name the track name (required, at most 200 characters)
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /** @return the ID of the album the track belongs to, or {@code null} if none */
+    /** {@return the ID of the album the track belongs to, or {@code null} if none} */
     public Integer getAlbumId() {
         return albumId;
     }
 
-    /** @param albumId the ID of an existing album, or {@code null} */
+    /**
+     * Sets the album ID.
+     *
+     * @param albumId the ID of an existing album, or {@code null}
+     */
     public void setAlbumId(Integer albumId) {
         this.albumId = albumId;
     }
 
-    /** @return the ID of the track's media type (file format) */
+    /** {@return the ID of the track's media type (file format)} */
     public Integer getMediaTypeId() {
         return mediaTypeId;
     }
 
-    /** @param mediaTypeId the ID of an existing media type (required) */
+    /**
+     * Sets the media type ID.
+     *
+     * @param mediaTypeId the ID of an existing media type (required)
+     */
     public void setMediaTypeId(Integer mediaTypeId) {
         this.mediaTypeId = mediaTypeId;
     }
 
-    /** @return the ID of the track's genre, or {@code null} if none */
+    /** {@return the ID of the track's genre, or {@code null} if none} */
     public Integer getGenreId() {
         return genreId;
     }
 
-    /** @param genreId the ID of an existing genre, or {@code null} */
+    /**
+     * Sets the genre ID.
+     *
+     * @param genreId the ID of an existing genre, or {@code null}
+     */
     public void setGenreId(Integer genreId) {
         this.genreId = genreId;
     }
 
-    /** @return the composer(s) of the track, or {@code null} if unknown */
+    /** {@return the composer(s) of the track, or {@code null} if unknown} */
     public String getComposer() {
         return composer;
     }
 
-    /** @param composer the composer(s) (optional, at most 220 characters) */
+    /**
+     * Sets the composer.
+     *
+     * @param composer the composer(s) (optional, at most 220 characters)
+     */
     public void setComposer(String composer) {
         this.composer = composer;
     }
 
-    /** @return the length of the track in milliseconds */
+    /** {@return the length of the track in milliseconds} */
     public Integer getMilliseconds() {
         return milliseconds;
     }
 
-    /** @param milliseconds the length of the track in milliseconds (required) */
+    /**
+     * Sets the length of the track in milliseconds.
+     *
+     * @param milliseconds the length of the track in milliseconds (required)
+     */
     public void setMilliseconds(Integer milliseconds) {
         this.milliseconds = milliseconds;
     }
 
-    /** @return the size of the track's file in bytes, or {@code null} if unknown */
+    /** {@return the size of the track's file in bytes, or {@code null} if unknown} */
     public Integer getBytes() {
         return bytes;
     }
 
-    /** @param bytes the file size in bytes (optional) */
+    /**
+     * Sets the file size in bytes.
+     *
+     * @param bytes the file size in bytes (optional)
+     */
     public void setBytes(Integer bytes) {
         this.bytes = bytes;
     }
 
-    /** @return the price of one purchase of the track */
+    /** {@return the price of one purchase of the track} */
     public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    /** @param unitPrice the price of one purchase of the track (required) */
+    /**
+     * Sets the price of one purchase of the track.
+     *
+     * @param unitPrice the price of one purchase of the track (required)
+     */
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }

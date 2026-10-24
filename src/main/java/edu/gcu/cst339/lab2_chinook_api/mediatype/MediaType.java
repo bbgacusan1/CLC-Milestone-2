@@ -44,17 +44,21 @@ class MediaType {
         this.name = name;
     }
 
-    /** @return the database-generated media type ID, or {@code null} if not yet saved */
+    /** {@return the database-generated media type ID, or {@code null} if not yet saved} */
     Integer getMediaTypeId() {
         return mediaTypeId;
     }
 
-    /** @return the media type name */
+    /** {@return the media type name} */
     String getName() {
         return name;
     }
 
-    /** @param name the new media type name (at most 120 characters) */
+    /**
+     * Sets the media type name.
+     *
+     * @param name the new media type name (at most 120 characters)
+     */
     void setName(String name) {
         this.name = name;
     }

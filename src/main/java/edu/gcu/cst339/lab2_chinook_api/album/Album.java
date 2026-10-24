@@ -44,27 +44,35 @@ class Album {
         this.artistId = artistId;
     }
     
-    /** @return the database-generated album ID, or {@code null} if the album has not been saved */
+    /** {@return the database-generated album ID, or {@code null} if the album has not been saved} */
     Integer getAlbumId() {
         return albumId;
     }
 
-    /** @return the album title */
+    /** {@return the album title} */
     String getTitle() {
         return title;
     }
 
-    /** @return the ID of the artist who recorded the album */
+    /** {@return the ID of the artist who recorded the album} */
     Integer getArtistId() {
         return artistId;
     }
 
-    /** @param title the new album title (required, at most 160 characters) */
+    /**
+     * Sets the album title.
+     *
+     * @param title the new album title (required, at most 160 characters)
+     */
     void setTitle(String title) {
         this.title = title;
     }
 
-    /** @param artistId the ID of an existing artist to assign the album to */
+    /**
+     * Sets the artist ID.
+     *
+     * @param artistId the ID of an existing artist to assign the album to
+     */
     void setArtistId(Integer artistId) {
         this.artistId = artistId;
     }

@@ -21,6 +21,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Lab2ChinookApiApplication {
 
 	/**
+	 * Creates the application class. Spring Boot instantiates it at startup;
+	 * application code never needs to call this constructor.
+	 */
+	public Lab2ChinookApiApplication() {
+	}
+
+	/**
 	 * Starts the embedded web server and the Spring application context.
 	 *
 	 * @param args command-line arguments passed through to Spring Boot

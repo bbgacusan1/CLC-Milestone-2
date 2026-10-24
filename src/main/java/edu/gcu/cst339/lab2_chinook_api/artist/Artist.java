@@ -38,14 +38,22 @@ class Artist {
     }
 
     // Getters
-    /** @return the database-generated artist ID, or {@code null} if the artist has not been saved */
+    /** {@return the database-generated artist ID, or {@code null} if the artist has not been saved} */
     Integer getArtistId() { return artistId; }
-    /** @return the artist name */
+    /** {@return the artist name} */
     String getArtistName() { return name; }
     // Setters
-    /** @param artistId the artist ID; normally set by the database rather than by application code */
+    /**
+     * Sets the artist ID.
+     *
+     * @param artistId the artist ID; normally set by the database rather than by application code
+     */
     void setArtistId(Integer artistId) { this.artistId = artistId; }
-    /** @param name the new artist name (at most 120 characters) */
+    /**
+     * Sets the artist name.
+     *
+     * @param name the new artist name (at most 120 characters)
+     */
     void setName(String name) { this.name = name; }
 
 }

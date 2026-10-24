@@ -37,22 +37,36 @@ class PlaylistTrack {
     @Column(name = "track_id")
     private Integer trackId;
 
-    /** @return the ID of the playlist this row belongs to */
+    /**
+     * No-argument constructor required by JPA.
+     */
+    PlaylistTrack() {
+    }
+
+    /** {@return the ID of the playlist this row belongs to} */
     public Integer getPlaylistId() {
         return playlistId;
     }
 
-    /** @param playlistId the ID of an existing playlist (part of the primary key) */
+    /**
+     * Sets the playlist ID.
+     *
+     * @param playlistId the ID of an existing playlist (part of the primary key)
+     */
     public void setPlaylistId(Integer playlistId) {
         this.playlistId = playlistId;
     }
 
-    /** @return the ID of the track on the playlist */
+    /** {@return the ID of the track on the playlist} */
     public Integer getTrackId() {
         return trackId;
     }
 
-    /** @param trackId the ID of an existing track (part of the primary key) */
+    /**
+     * Sets the track ID.
+     *
+     * @param trackId the ID of an existing track (part of the primary key)
+     */
     public void setTrackId(Integer trackId) {
         this.trackId = trackId;
     }
@@ -70,7 +84,9 @@ class PlaylistTrack {
 
         private static final long serialVersionUID = 1L;
 
+        /** The playlist part of the key; matches {@link PlaylistTrack#getPlaylistId()}. */
         private Integer playlistId;
+        /** The track part of the key; matches {@link PlaylistTrack#getTrackId()}. */
         private Integer trackId;
 
         /**

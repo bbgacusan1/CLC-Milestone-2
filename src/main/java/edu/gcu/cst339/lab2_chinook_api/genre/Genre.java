@@ -29,11 +29,15 @@ class Genre {
     public Genre() {
     }
 
-    /** @return the database-generated genre ID, or {@code null} if not yet saved */
+    /** {@return the database-generated genre ID, or {@code null} if not yet saved} */
     public Integer getGenreId() { return genreId; }
 
-    /** @return the genre name */
+    /** {@return the genre name} */
     public String getName() { return name; }
-    /** @param name the new genre name (at most 120 characters) */
+    /**
+     * Sets the genre name.
+     *
+     * @param name the new genre name (at most 120 characters)
+     */
     public void setName(String name) { this.name = name; }
 }

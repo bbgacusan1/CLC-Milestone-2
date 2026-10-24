@@ -18,6 +18,12 @@ import io.swagger.v3.oas.models.info.Info;
 class OpenApiConfig {
 
     /**
+     * Creates the configuration class. Spring instantiates it at startup.
+     */
+    OpenApiConfig() {
+    }
+
+    /**
      * Defines the general information block of the OpenAPI document.
      *
      * @return the OpenAPI definition containing the API title, description and version

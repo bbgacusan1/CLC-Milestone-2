@@ -79,66 +79,114 @@ class Customer {
     public Customer() {
     }
 
-    /** @return the database-generated customer ID, or {@code null} if not yet saved */
+    /** {@return the database-generated customer ID, or {@code null} if not yet saved} */
     public Integer getCustomerId() { return customerId; }
 
-    /** @return the customer's first name */
+    /** {@return the customer's first name} */
     public String getFirstName() { return firstName; }
-    /** @param firstName the customer's first name (required, at most 40 characters) */
+    /**
+     * Sets the customer's first name.
+     *
+     * @param firstName the customer's first name (required, at most 40 characters)
+     */
     public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    /** @return the customer's last name */
+    /** {@return the customer's last name} */
     public String getLastName() { return lastName; }
-    /** @param lastName the customer's last name (required, at most 20 characters) */
+    /**
+     * Sets the customer's last name.
+     *
+     * @param lastName the customer's last name (required, at most 20 characters)
+     */
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-    /** @return the customer's company, or {@code null} if none */
+    /** {@return the customer's company, or {@code null} if none} */
     public String getCompany() { return company; }
-    /** @param company the customer's company (optional, at most 80 characters) */
+    /**
+     * Sets the customer's company.
+     *
+     * @param company the customer's company (optional, at most 80 characters)
+     */
     public void setCompany(String company) { this.company = company; }
 
-    /** @return the customer's street address */
+    /** {@return the customer's street address} */
     public String getAddress() { return address; }
-    /** @param address the street address (optional, at most 70 characters) */
+    /**
+     * Sets the street address.
+     *
+     * @param address the street address (optional, at most 70 characters)
+     */
     public void setAddress(String address) { this.address = address; }
 
-    /** @return the customer's city */
+    /** {@return the customer's city} */
     public String getCity() { return city; }
-    /** @param city the city (optional, at most 40 characters) */
+    /**
+     * Sets the city.
+     *
+     * @param city the city (optional, at most 40 characters)
+     */
     public void setCity(String city) { this.city = city; }
 
-    /** @return the customer's state or province */
+    /** {@return the customer's state or province} */
     public String getState() { return state; }
-    /** @param state the state or province (optional, at most 40 characters) */
+    /**
+     * Sets the state or province.
+     *
+     * @param state the state or province (optional, at most 40 characters)
+     */
     public void setState(String state) { this.state = state; }
 
-    /** @return the customer's country */
+    /** {@return the customer's country} */
     public String getCountry() { return country; }
-    /** @param country the country (optional, at most 40 characters) */
+    /**
+     * Sets the country.
+     *
+     * @param country the country (optional, at most 40 characters)
+     */
     public void setCountry(String country) { this.country = country; }
 
-    /** @return the customer's postal code */
+    /** {@return the customer's postal code} */
     public String getPostalCode() { return postalCode; }
-    /** @param postalCode the postal code (optional, at most 10 characters) */
+    /**
+     * Sets the postal code.
+     *
+     * @param postalCode the postal code (optional, at most 10 characters)
+     */
     public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
 
-    /** @return the customer's phone number */
+    /** {@return the customer's phone number} */
     public String getPhone() { return phone; }
-    /** @param phone the phone number (optional, at most 24 characters) */
+    /**
+     * Sets the phone number.
+     *
+     * @param phone the phone number (optional, at most 24 characters)
+     */
     public void setPhone(String phone) { this.phone = phone; }
 
-    /** @return the customer's fax number */
+    /** {@return the customer's fax number} */
     public String getFax() { return fax; }
-    /** @param fax the fax number (optional, at most 24 characters) */
+    /**
+     * Sets the fax number.
+     *
+     * @param fax the fax number (optional, at most 24 characters)
+     */
     public void setFax(String fax) { this.fax = fax; }
 
-    /** @return the customer's email address */
+    /** {@return the customer's email address} */
     public String getEmail() { return email; }
-    /** @param email the email address (required, at most 60 characters) */
+    /**
+     * Sets the email address.
+     *
+     * @param email the email address (required, at most 60 characters)
+     */
     public void setEmail(String email) { this.email = email; }
 
-    /** @return the ID of the employee who supports this customer, or {@code null} if none */
+    /** {@return the ID of the employee who supports this customer, or {@code null} if none} */
     public Integer getSupportRepId() { return supportRepId; }
-    /** @param supportRepId the ID of an existing employee to assign as support representative, or {@code null} */
+    /**
+     * Sets the assigned support representative.
+     *
+     * @param supportRepId the ID of an existing employee to assign as support representative, or {@code null}
+     */
     public void setSupportRepId(Integer supportRepId) { this.supportRepId = supportRepId; }
 }
