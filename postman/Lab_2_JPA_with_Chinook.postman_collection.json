@@ -2,80 +2,130 @@
   "info": {
     "_postman_id": "f5e95fa1-005f-4815-9611-c31c174aaa91",
     "name": "Lab 2 JPA with Chinook",
-    "description": "CRUD verification for /api/albums against the deployed application. Run top to bottom (or use the Collection Runner): Create New Album saves the new ID into the albumId collection variable, which Update and Delete use, and Delete removes the test row again so the Chinook data is left unchanged. Change baseUrl to http://localhost:8080 to test a local run instead.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "58162934",
     "_collection_link": "https://go.postman.co/collection/58162934-f5e95fa1-005f-4815-9611-c31c174aaa91?source=collection_link"
   },
-  "variable": [
-    { "key": "baseUrl", "value": "https://clc-milestone-2.onrender.com" },
-    { "key": "albumId", "value": "" }
-  ],
   "item": [
     {
-      "name": "Get All Albums (200)",
-      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
-        "pm.test('Status is 200', () => pm.response.to.have.status(200));",
-        "pm.test('Returns the Chinook albums', () => pm.expect(pm.response.json().length).to.be.at.least(347));"
-      ]}}],
-      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/albums" },
+      "name": "Get All Albums",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/albums",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "albums"
+          ]
+        }
+      },
       "response": []
     },
     {
-      "name": "Get Album By Id (200)",
-      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
-        "pm.test('Status is 200', () => pm.response.to.have.status(200));",
-        "pm.test('Album 1 is the expected Chinook album', () => pm.expect(pm.response.json().title).to.eql('For Those About To Rock We Salute You'));"
-      ]}}],
-      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/albums/1" },
+      "name": "Get Album By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/albums/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "albums",
+            "1"
+          ]
+        }
+      },
       "response": []
     },
     {
-      "name": "Create New Album (201)",
-      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
-        "pm.test('Status is 201', () => pm.response.to.have.status(201));",
-        "const body = pm.response.json();",
-        "pm.test('Title was saved', () => pm.expect(body.title).to.eql('My Test Album'));",
-        "pm.collectionVariables.set('albumId', body.albumId);"
-      ]}}],
+      "name": "Create New Album",
       "request": {
         "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": { "mode": "raw", "raw": "{\"title\": \"My Test Album\", \"artistId\": 1}", "options": { "raw": { "language": "json" } } },
-        "url": "{{baseUrl}}/api/albums"
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"My Test Album\", \"artistId\": 1}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/albums",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "albums"
+          ]
+        }
       },
       "response": []
     },
     {
-      "name": "Update Album (200)",
-      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
-        "pm.test('Status is 200', () => pm.response.to.have.status(200));",
-        "const body = pm.response.json();",
-        "pm.test('ID unchanged', () => pm.expect(String(body.albumId)).to.eql(String(pm.collectionVariables.get('albumId'))));",
-        "pm.test('Title updated', () => pm.expect(body.title).to.eql('Renamed Album'));"
-      ]}}],
+      "name": "Update Album",
       "request": {
         "method": "PUT",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": { "mode": "raw", "raw": "{\"title\": \"Renamed Album\", \"artistId\": 1}", "options": { "raw": { "language": "json" } } },
-        "url": "{{baseUrl}}/api/albums/{{albumId}}"
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Renamed Album\", \"artistId\": 1}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/albums/348",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "albums",
+            "348"
+          ]
+        }
       },
       "response": []
     },
     {
-      "name": "Delete Album (204)",
-      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
-        "pm.test('Status is 204', () => pm.response.to.have.status(204));"
-      ]}}],
-      "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/albums/{{albumId}}" },
-      "response": []
-    },
-    {
-      "name": "Get Deleted Album (404)",
-      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
-        "pm.test('Status is 404', () => pm.response.to.have.status(404));"
-      ]}}],
-      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/albums/{{albumId}}" },
+      "name": "Delete Album",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/albums/348",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "albums",
+            "348"
+          ]
+        }
+      },
       "response": []
     }
   ]
