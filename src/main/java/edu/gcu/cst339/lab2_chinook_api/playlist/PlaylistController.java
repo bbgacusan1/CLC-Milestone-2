@@ -13,6 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller that exposes CRUD operations for Chinook playlists at
+ * {@code /playlists}.
+ *
+ * <p>Unlike the other controllers, this one is mapped without the {@code /api}
+ * prefix. It talks only to {@link PlaylistService} and never sees the
+ * {@code Playlist} entity. Missing IDs are reported by returning HTTP 404
+ * directly, based on an empty result from the service, rather than by
+ * throwing a not-found exception.</p>
+ */
 @RestController                 // handles HTTP requests; returned objects become JSON
 @RequestMapping("/playlists")      // every endpoint below starts with /playlists
 public class PlaylistController {
@@ -20,7 +30,11 @@ public class PlaylistController {
     // The controller HAS a service and only talks to it. It never sees the Playlist entity.
     private final PlaylistService playlistService;
 
-    // Constructor injection: Spring passes in the service
+    /**
+     * Creates the controller. Spring injects the service through this constructor.
+     *
+     * @param playlistService the service that performs playlist operations
+     */
     public PlaylistController(PlaylistService playlistService) {
         this.playlistService = playlistService;
     }

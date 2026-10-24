@@ -24,8 +24,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 /**
- * REST API for CRUD operations on Chinook Albums
- * AlbumController
+ * REST controller that exposes CRUD operations for Chinook albums at
+ * {@code /api/albums}.
+ *
+ * <p>The controller only handles HTTP concerns (paths, status codes, request
+ * validation) and delegates all data access to {@link AlbumService}. Requests
+ * that break a database foreign key, such as an unknown {@code artistId} or
+ * deleting an album that still has tracks, are converted to HTTP 409 Conflict
+ * by {@link #handleConflict(DataIntegrityViolationException)}.</p>
  */
 @Tag(name = "Albums", description = "CRUD operations for Chinook albums")
 @RestController
@@ -34,6 +40,11 @@ class AlbumController {
     
     private final AlbumService albumService;
 
+    /**
+     * Creates the controller. Spring injects the service through this constructor.
+     *
+     * @param albumService the service that performs album operations
+     */
     AlbumController(AlbumService albumService) {
         this.albumService = albumService;
     }
@@ -122,6 +133,12 @@ class AlbumController {
 
     /**
      * Converts database constraint violations into HTTP 409 Conflict responses.
+     *
+     * <p>Triggered when a create or update references an {@code artistId} that does
+     * not exist, or when a delete is blocked because tracks still reference the album.</p>
+     *
+     * @param ex the constraint violation raised by the database
+     * @return a 409 Conflict response with a short explanation in the body
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     ResponseEntity<String> handleConflict(DataIntegrityViolationException ex) {

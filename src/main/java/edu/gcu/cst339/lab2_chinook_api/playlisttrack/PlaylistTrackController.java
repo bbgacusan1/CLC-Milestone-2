@@ -16,24 +16,49 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;   // makes the @NotNull rules on the DTO actually run
 
+/**
+ * REST controller that manages which tracks are on which playlists, at
+ * {@code /api/playlist-tracks}.
+ *
+ * <p>Because the primary key is a pair, a single row is addressed by both IDs
+ * in the URL: {@code /api/playlist-tracks/{playlistId}/{trackId}}. All work is
+ * delegated to {@link PlaylistTrackService}; empty results from the service are
+ * turned into HTTP 404, or HTTP 409 when creating a link that already exists.</p>
+ */
 @RestController                         
 @RequestMapping("/api/playlist-tracks") 
 class PlaylistTrackController {
 
     private final PlaylistTrackService playlistTrackService;
 
+    /**
+     * Creates the controller. Spring injects the service through this constructor.
+     *
+     * @param playlistTrackService the service that performs playlist-track operations
+     */
     PlaylistTrackController(PlaylistTrackService playlistTrackService) {
         this.playlistTrackService = playlistTrackService;
     }
 
     
+    /**
+     * Handles {@code GET /api/playlist-tracks}.
+     *
+     * @return every playlist-track link (HTTP 200)
+     */
     @GetMapping
     List<PlaylistTrackDto> findAll() {
         return playlistTrackService.getAllPlaylistTracks();
     }
 
-    // GET /api/playlist-tracks/{playlistId}/{trackId} -> 200 + the link, or 404 if that pair doesn't exist
-    // Both ids are in the URL because the primary key is the pair.
+    /**
+     * Handles {@code GET /api/playlist-tracks/{playlistId}/{trackId}}. Both IDs are
+     * in the URL because together they form the primary key.
+     *
+     * @param playlistId the playlist part of the key, from the URL
+     * @param trackId    the track part of the key, from the URL
+     * @return the link (HTTP 200), or HTTP 404 if that track is not on that playlist
+     */
     @GetMapping("/{playlistId}/{trackId}")
     ResponseEntity<PlaylistTrackDto> findById(@PathVariable Integer playlistId,
                                               @PathVariable Integer trackId) {
@@ -42,7 +67,15 @@ class PlaylistTrackController {
                 .orElse(ResponseEntity.notFound().build());   // empty: 404
     }
 
-    // POST /api/playlist-tracks -> 201 + the new link, or 409 if that track is already on that playlist
+    /**
+     * Handles {@code POST /api/playlist-tracks} by adding a track to a playlist.
+     * Both IDs come from the validated JSON body.
+     *
+     * @param dto the playlist ID and track ID to link, read from the JSON body
+     * @return the new link (HTTP 201 Created) with a {@code Location} header
+     *         pointing to {@code /api/playlist-tracks/{playlistId}/{trackId}}, or
+     *         HTTP 409 Conflict if that track is already on that playlist
+     */
     @PostMapping
     ResponseEntity<PlaylistTrackDto> create(@Valid @RequestBody PlaylistTrackDto dto) {
         return playlistTrackService.createPlaylistTrack(dto)
@@ -55,8 +88,15 @@ class PlaylistTrackController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build()); // empty: 409
     }
 
-    // PUT /api/playlist-tracks/{playlistId}/{trackId} -> 200 + the moved link, or 404 if the old pair doesn't exist
-    // The URL is the OLD pair (which row to change); the body is the NEW pair.
+    /**
+     * Handles {@code PUT /api/playlist-tracks/{playlistId}/{trackId}} by moving a
+     * link. The URL identifies the existing (old) pair and the body holds the new pair.
+     *
+     * @param playlistId the playlist part of the existing key, from the URL
+     * @param trackId    the track part of the existing key, from the URL
+     * @param dto        the new playlist ID and track ID, read from the JSON body
+     * @return the moved link (HTTP 200), or HTTP 404 if the old pair does not exist
+     */
     @PutMapping("/{playlistId}/{trackId}")
     ResponseEntity<PlaylistTrackDto> update(@PathVariable Integer playlistId,
                                             @PathVariable Integer trackId,
@@ -66,7 +106,15 @@ class PlaylistTrackController {
                 .orElse(ResponseEntity.notFound().build());   // no such pair: 404
     }
 
-    // DELETE /api/playlist-tracks/{playlistId}/{trackId} -> 204 if deleted, or 404 if that pair doesn't exist
+    /**
+     * Handles {@code DELETE /api/playlist-tracks/{playlistId}/{trackId}} by removing
+     * a track from a playlist.
+     *
+     * @param playlistId the playlist part of the key, from the URL
+     * @param trackId    the track part of the key, from the URL
+     * @return HTTP 204 No Content if the link was deleted, or HTTP 404 if that pair
+     *         does not exist
+     */
     @DeleteMapping("/{playlistId}/{trackId}")
     ResponseEntity<Void> delete(@PathVariable Integer playlistId,
                                 @PathVariable Integer trackId) {
