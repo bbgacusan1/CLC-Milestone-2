@@ -1,6 +1,5 @@
 package edu.gcu.cst339.lab2_chinook_api.user;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
