@@ -137,4 +137,61 @@ public class UserController {
     public String loginSuccess() {
         return "login-success";
     }
+
+        /**
+     * Shows the password-change form. Visitors with no remembered username
+     * are sent to the login page.
+     *
+     * @param session the HTTP session
+     * @param model the Spring MVC model
+     * @return the change-password template, or a redirect to login
+     */
+    @GetMapping("/change-password")
+    public String showChangePasswordForm(HttpSession session, Model model) {
+        if (session.getAttribute(SESSION_USERNAME) == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("passwordChange", new PasswordChangeViewModel());
+        return "change-password";
+    }
+
+    /**
+     * Replaces the password for the user remembered in the session, then
+     * redirects to login (POST/Redirect/GET).
+     *
+     * @param form the submitted password data
+     * @param bindingResult validation results for the form
+     * @param session the HTTP session
+     * @param redirectAttributes flash attributes for the redirect
+     * @return the form on error, otherwise a redirect to login
+     */
+    @PostMapping("/change-password")
+    public String changePassword(@Valid @ModelAttribute("passwordChange") PasswordChangeViewModel form,
+                                 BindingResult bindingResult,
+                                 HttpSession session,
+                                 RedirectAttributes redirectAttributes) {
+        String username = (String) session.getAttribute(SESSION_USERNAME);
+        if (username == null) {
+            return "redirect:/login";
+        }
+        if (bindingResult.hasErrors()) {
+            return "change-password";
+        }
+        try {
+            userService.changePassword(username, form.getCurrentPassword(),
+                    form.getNewPassword(), form.getConfirmPassword());
+        } catch (UserRuleException e) {
+            switch (e.getReason()) {
+                case INVALID_CURRENT_PASSWORD ->
+                        bindingResult.rejectValue("currentPassword", "incorrect", e.getMessage());
+                case PASSWORD_MISMATCH ->
+                        bindingResult.rejectValue("confirmPassword", "mismatch", e.getMessage());
+                default -> bindingResult.reject("password.invalid", e.getMessage());
+            }
+            return "change-password";
+        }
+        session.removeAttribute(SESSION_USERNAME);
+        redirectAttributes.addFlashAttribute("successMessage", "Password changed. Please log in again.");
+        return "redirect:/login";
+    }
 }
