@@ -21,32 +21,63 @@ public class RegistrationViewModel {
     @NotBlank(message = "Please confirm the password")
     private String confirmPassword;
 
-    /** @return the requested username */
+    /**
+     * Creates an empty form. Spring calls this before binding the submitted
+     * request parameters, and the GET handler uses it to render a blank form.
+     */
+    public RegistrationViewModel() {
+    }
+
+    /**
+     * Returns the username entered on the form.
+     *
+     * @return the requested username
+     */
     public String getUsername() {
         return username;
     }
 
-    /** @param username the requested username */
+    /**
+     * Sets the username entered on the form.
+     *
+     * @param username the requested username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /** @return the submitted password */
+    /**
+     * Returns the password entered on the form.
+     *
+     * @return the submitted password
+     */
     public String getPassword() {
         return password;
     }
 
-    /** @param password the submitted password */
+    /**
+     * Sets the password entered on the form.
+     *
+     * @param password the submitted password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /** @return the password confirmation */
+    /**
+     * Returns the password confirmation entered on the form.
+     *
+     * @return the password confirmation
+     */
     public String getConfirmPassword() {
         return confirmPassword;
     }
 
-    /** @param confirmPassword the password confirmation */
+    /**
+     * Sets the password confirmation entered on the form.
+     *
+     * @param confirmPassword the password confirmation
+     */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
