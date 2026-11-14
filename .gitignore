@@ -32,3 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 .env.test
+
+# Local environment files (secrets)
+.env
+.env.*
