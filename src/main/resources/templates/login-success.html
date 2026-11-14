@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Credentials Accepted')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container py-4" style="max-width: 40rem;">
+    <div class="alert alert-success">
+        Credentials accepted<span th:if="${username}" th:text="' for ' + ${username}"></span>.
+    </div>
+    <p class="text-body-secondary">
+        Milestone 4 only checks the username and password against the database.
+        It does not create a secure authenticated session, and other pages can still
+        be opened directly by URL. Spring Security replaces this in Milestone 5.
+    </p>
+    <a class="btn btn-outline-primary" th:href="@{/}">Home</a>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
